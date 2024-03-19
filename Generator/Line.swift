@@ -74,8 +74,9 @@ private extension Line {
 
         let name = words[index + 1]
         let type = words[index + 2]
+        let castedType = Object.Property.PropertyType(string: type)
 
-        return .init(name: name, type: type)
+        return .init(name: name, type: type, castedType: castedType)
     }
 
     func containsEndOfObject(_ line: String) -> Bool {

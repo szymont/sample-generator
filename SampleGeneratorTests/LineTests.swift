@@ -33,7 +33,7 @@ class SampleGeneratorTests: XCTestCase {
     }
 
     func testClosurePropertyArgument() {
-        let property = Object.Property(name: "closure", type: "() -> Void")
+        let property = Object.Property(name: "closure", type: "() -> Void", newType: .unknownNonOptional)
 
         let argument = property.argument
         XCTAssertEqual(argument, "        closure: @escaping () -> Void = <#default value#>")
