@@ -24,8 +24,6 @@ extension %@ {
 %@
 """
 
-let defaultValue = " = <#default value" + "#" + ">"
-
 let escaping = "@escaping "
 
 extension Object {
@@ -76,9 +74,9 @@ private extension Object {
 }
 
 extension Object.Property {
-
     var argument: String {
-        String(repeating: singleIndent, count: 2) + name + ": " + argumentType + defaultValue
+        let typeSuffix: String = argumentType + " = " + castedType.defaultValue(forName: name)
+        return String(repeating: singleIndent, count: 2) + name + ": " + typeSuffix
     }
 
     var body: String {

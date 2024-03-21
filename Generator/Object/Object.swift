@@ -13,9 +13,9 @@ final class Object {
     struct Property {
         let name: String
         let type: String
-        let castedType: PropertyType?
+        let castedType: PropertyType
 
-        enum PropertyType {
+        enum PropertyType: Hashable {
             case uuid
             case string
             case date
@@ -90,4 +90,24 @@ extension Object.Property.PropertyType {
         .url: /URL\??$/,
     ]
     private static let optionalPattern: Regex = /.*\?$/
+
+    func defaultValue(forName name: String) -> String {
+        switch self {
+        case .uuid: return "UUID()"
+        case .string: return "\"\(name)\""
+        case .date: return "Date(timeIntervalSince1970: 1000)"
+        case .timeInterval: return Int.random(in: 100 ... 200).description
+        case .bool: return "false"
+        case .int: return Int.random(in: 0 ... 100).description
+        case .decimal: return "Decimal(\(Int.random(in: 0 ... 100))"
+        case .double: return Double.random(in: 0.0 ... 10.0).description
+        case .float: return Float.random(in: 0.0 ... 10.0).description
+        case .url: return "URL(string: \"https://foo.bar/\")"
+        case .array: return "[]"
+        case .dictionary: return "[:]"
+        case .set: return "Set()"
+        case .unknownOptional: return "nil"
+        case .unknownNonOptional: return "<#default value#" + ">"
+        }
+    }
 }

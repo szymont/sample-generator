@@ -76,7 +76,8 @@ private extension Line {
         let type = words[index + 2]
         let castedType = Object.Property.PropertyType(string: type)
 
-        return .init(name: name, type: type, castedType: castedType)
+        let property = Object.Property(name: name, type: type, castedType: castedType)
+        return property
     }
 
     func containsEndOfObject(_ line: String) -> Bool {
@@ -84,16 +85,17 @@ private extension Line {
     }
 
     func findWords(_ line: String) -> [String] {
-        let declarationAndType = line
-            .components(separatedBy: ":")
+        let delimiter: Character = ":"
+
+        guard let index = line.firstIndex(of: delimiter) else {
+            return line.components(separatedBy: .whitespaces)
+        }
+
+        let declaration = line.prefix(upTo: index)
+        let type = line.suffix(from: line.index(after: index))
+        let result = (declaration.components(separatedBy: .whitespaces) + [String(type)])
             .map { $0.trimmingCharacters(in: .whitespaces) }
             .filter { !$0.isEmpty }
-
-        guard
-            let declaration = declarationAndType.first,
-            let type = declarationAndType.last
-        else { return [] }
-
-        return declaration.components(separatedBy: .whitespaces) + [type]
+        return result
     }
 }

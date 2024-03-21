@@ -13,7 +13,6 @@ struct Generator {
 }
 
 extension Generator {
-
     func generateSamples() -> [String] {
         let objects = makeObjects()
         return objects.map { $0.sample }
@@ -21,7 +20,6 @@ extension Generator {
 }
 
 private extension Generator {
-
     func makeObjects() -> [Object] {
         var objects = [Object]()
         var currentObject: Object?

@@ -9,7 +9,6 @@
 import Foundation
 
 let singleIndent = "    "
-
 let representationTemplate =
 """
 struct %@ {
@@ -18,15 +17,14 @@ struct %@ {
 """
 
 extension Object {
-
     var representation: String {
         representation(indent: "")
     }
 }
 
 // MARK: Private
-private extension Object {
 
+private extension Object {
     func representation(indent: String) -> String {
         .init(
             format: representationTemplate,
@@ -55,7 +53,6 @@ private extension Object {
 }
 
 extension Object.Property {
-
     func representation(indent: String) -> String {
         indent + "let " + name + ": " + type
     }
